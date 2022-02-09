@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 
+st.title('Used Guitar Appraiser')
+
 df = pd.DataFrame({
     'Brand': ['Fender','Gibson','Epiphone','Jackson'],
     'second column': [10, 20, 30, 40]
