@@ -15,8 +15,8 @@ DATA_URL = ('https://storage.cloud.google.com/guitars/data/all_used_guitars.csv'
 @st.cache
 def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
-    lowercase = lambda x: str(x).lower()
-    data.rename(lowercase, axis='columns', inplace=True)
+    #lowercase = lambda x: str(x).lower()
+    #data.rename(lowercase, axis='columns', inplace=True)
     #data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
     return data
 
@@ -29,8 +29,8 @@ if st.checkbox('Show raw data'):
 
 
 
-option = st.selectbox(
-    'What brand is your guitar?',
-     df['Brand'])
+#option = st.selectbox(
+#    'What brand is your guitar?',
+#     df['Brand'])
 
-'You selected: ', option
+#'You selected: ', option
