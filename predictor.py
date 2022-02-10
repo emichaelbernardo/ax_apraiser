@@ -8,7 +8,6 @@ df = pd.DataFrame({
     'second column': [10, 20, 30, 40]
     })
 
-data_url = '
 
 #DATE_COLUMN = 'date/time'
 DATA_URL = ('https://storage.cloud.google.com/guitars/data/all_used_guitars.csv')
