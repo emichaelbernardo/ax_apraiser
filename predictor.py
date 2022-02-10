@@ -1,36 +1,21 @@
+# streamlit_app.py
+
 import streamlit as st
-import pandas as pd
+from gsheetsdb import connect
 
-st.title('Used Guitar Appraiser')
+# Create a connection object.
+conn = connect()
 
-df = pd.DataFrame({
-    'Brand': ['Fender','Gibson','Epiphone','Jackson'],
-    'second column': [10, 20, 30, 40]
-    })
+# Perform SQL query on the Google Sheet.
+# Uses st.cache to only rerun when the query changes or after 10 min.
+@st.cache(ttl=600)
+def run_query(query):
+    rows = conn.execute(query, headers=1)
+    return rows
 
+sheet_url = st.secrets["public_gsheets_url"]
+rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
-#DATE_COLUMN = 'date/time'
-DATA_URL = ('https://storage.cloud.google.com/guitars/data/all_used_guitars.csv')
-
-@st.cache
-def load_data(nrows):
-    data = pd.read_csv(DATA_URL, nrows=nrows)
-    #lowercase = lambda x: str(x).lower()
-    #data.rename(lowercase, axis='columns', inplace=True)
-    #data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
-    return data
-
-data = load_data(10000)
-
-if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
-    st.write(data)
-    
-
-
-
-#option = st.selectbox(
-#    'What brand is your guitar?',
-#     df['Brand'])
-
-#'You selected: ', option
+# Print results.
+for row in rows:
+    st.write(f"{row.name} has a :{row.pet}:")
